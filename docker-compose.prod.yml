@@ -1,6 +1,6 @@
 services:
   backend:
-    image: ghcr.io/JCUYAR/tareo-backend:latest
+    image: ghcr.io/jcuyar/tareo-backend:latest
     container_name: nestjs-tareo-api
     restart: unless-stopped
     env_file:
@@ -11,7 +11,7 @@ services:
       - app-network
 
   frontend:
-    image: ghcr.io/JCUYAR/tareo-frontend:latest
+    image: ghcr.io/jcuyar/tareo-frontend:latest
     container_name: react-tareo-app
     restart: unless-stopped
     ports:
