@@ -1,0 +1,43 @@
+services:
+  backend:
+    image: ghcr.io/JCUYAR/tareo-backend:latest
+    container_name: nestjs-tareo-api
+    restart: unless-stopped
+    env_file:
+      - .env.production
+    depends_on:
+      - mysql
+    networks:
+      - app-network
+
+  frontend:
+    image: ghcr.io/JCUYAR/tareo-frontend:latest
+    container_name: react-tareo-app
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  mysql:
+    image: mysql:8.4
+    container_name: mi_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    ports:
+      - "127.0.0.1:3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
